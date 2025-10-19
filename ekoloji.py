@@ -1,0 +1,23 @@
+import streamlit as st
+
+st.title("🌍 Ekolojik Ayak İzi Hesaplama Aracı")
+
+ulasim = st.number_input("Günde ortalama kaç km yol yapıyorsunuz?")
+elektrik = st.number_input("Aylık elektrik tüketiminiz (kWh):")
+et = st.slider("Haftada kaç gün et tüketiyorsunuz?", 0, 7, 3)
+su = st.number_input("Günde kaç litre su kullanıyorsunuz?")
+geri_donusum = st.checkbox("Geri dönüşüm yapıyorum")
+
+puan = (ulasim * 0.02) + (elektrik * 0.05) + (et * 2) + (su * 0.01)
+if geri_donusum:
+    puan *= 0.9
+
+st.subheader(f"Sizin ekolojik ayak izi puanınız: {puan:.2f}")
+
+if puan < 20:
+    st.success("Tebrikler! 🌱 Doğaya oldukça duyarlı bir yaşam tarzınız var.")
+elif puan < 50:
+    st.warning("Fena değil, ama biraz daha dikkat edebilirsiniz. ♻️")
+else:
+    st.error("⚠️ Tüketiminiz yüksek, doğaya daha dost alışkanlıklar edinmeye çalışın.")
+streamlit run ekoloji.py
