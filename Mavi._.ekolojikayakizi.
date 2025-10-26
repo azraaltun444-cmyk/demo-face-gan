@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌱 Ekolojik Ayak İzi Hesaplama</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #e8f5e9;
+    color: #2e7d32;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    color: #1b5e20;
+  }
+  .info, .countries {
+    background: #c8e6c9;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 700px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .countries {
+    background: #f1f8e9;
+  }
+  .container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    max-width: 450px;
+    margin: auto;
+    padding: 25px;
+  }
+  input, select, button {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #a5d6a7;
+    font-size: 16px;
+  }
+  button {
+    background: #43a047;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #2e7d32;
+  }
+  #sonuc {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+    min-height: 40px;
+  }
+</style>
+</head>
+<body>
+
+<h1>🌍 Ekolojik Ayak İzi Hesaplama 🌱</h1>
+
+<div class="info">
+  <h2>Ekolojik Ayak İzi Nedir?</h2>
+  <p>
+    Ekolojik ayak izi, bir kişinin yaşam tarzını sürdürebilmek için doğadan ne kadar kaynak tükettiğini ölçer.  
+    Ne kadar çok enerji, su, ulaşım ve et tüketirsek, doğa üzerindeki yükümüz de o kadar artar.
+  </p>
+  <p>
+    Ortalama bir insan 1 yılda doğanın yenileyebileceğinden fazla kaynak tüketiyor.  
+    Bu yüzden insanlık şu anda <b>yaklaşık 1.7 Dünya</b> kullanıyormuş gibi yaşıyor! 🌎➡️🌍🌍
+  </p>
+</div>
+
+<div class="countries">
+  <h3>Ülkelere Göre Ortalama Ekolojik Ayak İzi</h3>
+  <ul style="text-align:left; line-height:1.8;">
+    <li>🇹🇷 Türkiye: 3.2 gha (yaklaşık 1.9 Dünya)</li>
+    <li>🇺🇸 ABD: 8.0 gha (yaklaşık 5.0 Dünya)</li>
+    <li>🇩🇪 Almanya: 4.5 gha (yaklaşık 2.8 Dünya)</li>
+    <li>🇯🇵 Japonya: 4.0 gha (yaklaşık 2.5 Dünya)</li>
+    <li>🇮🇳 Hindistan: 1.2 gha (yaklaşık 0.8 Dünya)</li>
+  </ul>
+</div>
+
+<div class="container">
+  <h2>Kendi Ayak İzini Hesapla</h2>
+
+  <label>🚗 Kendi şahsi aracınız varsa, <b>günde ortalama kaç km</b> yol yapıyorsunuz?<br>
+  Eğer aracınız yoksa "0" yazın.</label><br>
+  <input type="number" id="ulasim" min="0" placeholder="Örnek: 15"><br>
+
+  <label>💡 Aylık ortalama <b>elektrik tüketiminiz</b> (kWh cinsinden):<br>
+  Elektrik faturanızda yazar. Emin değilseniz ortalama 200-300 yazabilirsiniz.</label><br>
+  <input type="number" id="elektrik" min="0" placeholder="Örnek: 250"><br>
+
+  <label>🍖 Haftada <b>kaç gün et veya tavuk</b> tüketiyorsunuz?</label><br>
+  <input type="number" id="et" min="0" max="7" placeholder="0-7 arası"><br>
+
+  <label>🚿 Günlük ortalama <b>su tüketiminiz</b> (litre cinsinden):<br>
+  Duş, tuvalet, bulaşık, çamaşır, içme suyu dahil. Ortalama 150-250 litre olabilir.</label><br>
+  <input type="number" id="su" min="0" placeholder="Örnek: 200"><br>
+
+  <label>♻️ <b>Geri dönüşüm</b> yapıyor musunuz? (Kağıt, plastik, cam vb.)</label><br>
+  <select id="geri">
+    <option value="evet">Evet, düzenli olarak yapıyorum</option>
+    <option value="bazen">Bazen yapıyorum</option>
+    <option value="hayir">Hayır, yapmıyorum</option>
+  </select><br>
+
+  <button onclick="hesapla()">Hesapla 🌿</button>
+
+  <div id="sonuc"></div>
+</div>
+
+<script>
+function hesapla() {
+  let ulasim = parseFloat(document.getElementById('ulasim').value) || 0;
+  let elektrik = parseFloat(document.getElementById('elektrik').value) || 0;
+  let et = parseFloat(document.getElementById('et').value) || 0;
+  let su = parseFloat(document.getElementById('su').value) || 0;
+  let geri = document.getElementById('geri').value;
+
+  let puan = (ulasim * 0.02) + (elektrik * 0.05) + (et * 2) + (su * 0.01);
+  
+  if (geri === "evet") puan *= 0.9;
+  else if (geri === "bazen") puan *= 0.95;
+
+  let sonucDiv = document.getElementById('sonuc');
+  let mesaj = "";
+  let renk = "";
+  let dunyaSayisi = (puan / 25).toFixed(1);
+
+  if (puan < 20) {
+    mesaj = "✅ Harika! Doğaya duyarlı bir yaşam tarzınız var.";
+    renk = "#81c784";
+  } else if (puan < 50) {
+    mesaj = "⚠️ Orta seviyede. Daha sürdürülebilir seçimler yapabilirsiniz.";
+    renk = "#fff176";
+  } else {
+    mesaj = "❌ Yüksek! Kaynak tüketiminizi azaltmanız gerekiyor.";
+    renk = "#e57373";
+  }
+
+  sonucDiv.innerHTML = `${mesaj}<br><b>Tahmini Ayak İzi Puanınız:</b> ${puan.toFixed(1)}<br><b>Yaklaşık ${dunyaSayisi} Dünya</b> kaynak kullanıyorsunuz 🌍`;
+  sonucDiv.style.background = renk;
+}
+</script>
+
+</body>
+</html>
